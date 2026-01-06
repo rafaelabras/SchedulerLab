@@ -1,0 +1,32 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Code coverage profiles and other test artifacts
+*.out
+coverage.*
+*.coverprofile
+profile.cov
+
+# Dependency directories (remove the comment below to include it, if using vendoring)
+# vendor/
+
+# Go workspace file
+go.work
+go.work.sum
+
+# Editor/IDE specific files
+.idea/         # GoLand project settings folder
+*.iml          # GoLand module file
+*.ipr          # GoLand project file
+*.iws          # GoLand workspace file
+.vscode/       # VS Code settings (optional, but useful if others use VS Code)
+
+# Environment variables file
+.env

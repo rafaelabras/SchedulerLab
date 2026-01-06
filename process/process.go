@@ -11,26 +11,62 @@ const (
 )
 
 type Process struct {
-	PID      int
-	Status   int
-	Priority int
-	Tickets  int
-	Runtime  int
+	PID                   int
+	Status                int
+	Priority              int
+	Tickets               int
+	Runtime               int
+	CPUTime               int
+	RemainingInstructions int
+	ParentPID             int
+	ChildrenPids          []int
 }
 
+// Refatorar PT para FIFO
 type ProcessTable map[int][]int
+
+func (p *Process) RunInstruction() {
+	p.CPUTime++
+	p.RemainingInstructions--
+
+	if p.RemainingInstructions == 0 {
+		p.Exit()
+		return
+	}
+}
+
+func (p *Process) Ready() {
+	p.Status = 1
+}
+
+func (p *Process) Block() {
+	p.Status = 3
+}
+
+func (p *Process) Exit() {
+	p.Status = 4
+}
+
+func (p *Process) IsFinished() bool {
+	if p.Status == 4 {
+		return true
+	} else {
+		return false
+	}
+}
 
 func InitializeProcessTable() ProcessTable {
 	return make(ProcessTable)
 }
 
-func CreateProcess(pid int, status int, priority int, tickets int, runtime int) Process {
+func CreateProcess(pid int, status int, priority int, tickets int, runtime int, parentpid int, remaininginstructions int, cputime int) Process {
 	return Process{
-		PID:      pid,
-		Status:   status,
-		Priority: priority,
-		Tickets:  tickets,
-		Runtime:  runtime,
+		PID:          pid,
+		Status:       status,
+		Priority:     priority,
+		Tickets:      tickets,
+		Runtime:      runtime,
+		ChildrenPids: make([]int, 1),
 	}
 }
 
